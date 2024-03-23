@@ -11,12 +11,16 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 				.querySelectorAll(`img[src='${url}']`)
 				.forEach((img) => ((img as HTMLImageElement).src = url))
 		);
-	}, 60000);
+	}, 600000);
 
 	return (
 		<Marker position={props.position}>
 			<Popup minWidth={750}>
-				<img src={url} alt={`${props.description}`} style={{borderRadius: '5px'}}/>
+				<img
+					src={url}
+					alt={`${props.description}`}
+					style={{ borderRadius: "5px" }}
+				/>
 			</Popup>
 		</Marker>
 	);
