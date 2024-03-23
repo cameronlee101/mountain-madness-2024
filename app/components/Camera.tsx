@@ -11,7 +11,7 @@ import L from "leaflet";
 // }
 
 var cameraIcon = L.icon({
-	iconUrl: "camera-icon-right.png",
+	iconUrl: "camera-icon.png",
 
 	iconSize: [40, 40], // size of the icon
 	iconAnchor: [20, 20], // point of the icon which will correspond to marker's location
