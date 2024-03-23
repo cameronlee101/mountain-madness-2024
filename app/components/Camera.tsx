@@ -3,19 +3,12 @@ import CameraProps from "@typings/CameraProps";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 
-// async function reloadImg(url: string): Promise<void> {
-// 	await fetch(url, { cache: "reload", mode: "no-cors" });
-// 	document.body
-// 		.querySelectorAll(`img[src='${url}']`)
-// 		.forEach((img) => (img.src = url));
-// }
-
 var cameraIcon = L.icon({
 	iconUrl: "camera-icon.png",
 
-	iconSize: [40, 40], // size of the icon
-	iconAnchor: [20, 20], // point of the icon which will correspond to marker's location
-	popupAnchor: [0, -15], // point from which the popup should open relative to the iconAnchor
+	iconSize: [40, 40],
+	iconAnchor: [20, 20],
+	popupAnchor: [0, -15],
 });
 
 const Camera: React.FC<CameraProps> = (props: CameraProps) => {
