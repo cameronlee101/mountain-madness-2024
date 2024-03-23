@@ -5,11 +5,24 @@ import MapProps from '@typings/MapProps';
 import mapData from '@assets/mapData.json'
 
 const Map: React.FC<MapProps> = (props: MapProps) => {
+    // Default to mobile.
+    let zoom = mapData.zoom.initial.smallScreen;
+    let minZoom = mapData.zoom.min.smallScreen;
+    if (window.innerWidth >= 3100) {
+        // Large monitor.
+        zoom = mapData.zoom.initial.largeScreen;
+        minZoom = mapData.zoom.min.largeScreen;
+    } else if (window.innerWidth >= 800) {
+        // Laptop.
+        zoom = mapData.zoom.initial.baseScreen;
+        minZoom = mapData.zoom.min.baseScreen;
+    }
+
 	return (
 		<MapContainer
 			className={props.className}
 			center={[mapData.center.lat, mapData.center.lng]}
-			zoom={mapData.zoom.initial}
+			zoom={zoom}
 			zoomControl={true}
 			scrollWheelZoom={true}
 			maxBounds={[
@@ -22,7 +35,7 @@ const Map: React.FC<MapProps> = (props: MapProps) => {
 					mapData.maxBounds.northeast.lng,
 				],
 			]}
-			minZoom={mapData.zoom.min}
+			minZoom={minZoom}
 		>
 			{props.children}
 			<TileLayer

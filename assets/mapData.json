@@ -14,7 +14,15 @@
         }
     },
     "zoom": {
-        "initial": 16,
-        "min": 15
+        "initial": {
+            "baseScreen": 16,
+            "smallScreen": 15,
+            "largeScreen": 17
+        },
+        "min": {
+            "baseScreen": 15,
+            "smallScreen": 15,
+            "largeScreen": 16
+        }
     }
 }
