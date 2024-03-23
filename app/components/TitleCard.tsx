@@ -8,7 +8,7 @@ const TitleCard: React.FC = () => {
 
 	return (
 		<div
-			className={`absolute m-auto left-0 right-0 top-4 z-10 w-fit p-2 bg-slate-400 bg-opacity-60 rounded-2xl cursor-pointer ${animationClass}`}
+			className={`absolute m-auto left-0 right-0 bottom-4 z-10 w-fit p-2 bg-slate-400 bg-opacity-60 rounded-2xl cursor-pointer ${animationClass}`}
 			onClick={() => {
 				setAnimationClass(styles.fadeAway);
 			}}
