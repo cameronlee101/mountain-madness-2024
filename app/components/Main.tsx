@@ -1,9 +1,9 @@
 import React from 'react';
-import MapComponent from "@/app/components/Map";
+import Map from "@/app/components/Map";
 
 const Main: React.FC = () => {
     return <div>
-        <MapComponent></MapComponent>
+        <Map></Map>
     </div>
 };
 

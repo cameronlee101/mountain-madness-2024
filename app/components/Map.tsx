@@ -1,9 +1,9 @@
 import React from 'react';
 
-const MapComponent: React.FC = () => {
+const Map: React.FC = () => {
     return <div>
         <p>Map Component goes here!!!</p>
     </div>
 }
 
-export default MapComponent;
+export default Map;
