@@ -22,8 +22,18 @@ const Main: React.FC = () => {
 					/>
                     <Camera
 						name="aqsw-current"
-						description="AQ south-west view from the south-west corner."
-						position={[49.27855484810059, -122.9174309249192]}
+						description="AQ south-west corner, looking south-west."
+						position={[49.27847938137774, -122.91784932211006]}
+					/>
+                    <Camera
+						name="aqse-current"
+						description="AQ south-east corner, looking north-west."
+						position={[49.27828620368422, -122.91573304015539]}
+					/>
+                    <Camera
+						name="towern-current"
+						description="Tower road north view."
+						position={[49.276574492849676, -122.90955202781595]}
 					/>
 				</Map>
 			</div>
