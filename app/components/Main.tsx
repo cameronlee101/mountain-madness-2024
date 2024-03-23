@@ -9,8 +9,8 @@ const Main: React.FC = () => {
 			<div className="flex flex-1 justify-center items-center w-full">
 				<Map className="w-full h-full z-0">
 					<Camera
-						name="aqn-current"
-						description="SFU AQ."
+						name="gaglardi-current"
+						description="Gaglardi intersection."
 						position={[49.274625147218664, -122.92517058936349]}
 					/>
 				</Map>
