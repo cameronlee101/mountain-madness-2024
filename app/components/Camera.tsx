@@ -27,7 +27,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 				.querySelectorAll(`img[src='${url}']`)
 				.forEach((img) => ((img as HTMLImageElement).src = url))
 		);
-	}, 60000);
+	}, 600000);
 
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
