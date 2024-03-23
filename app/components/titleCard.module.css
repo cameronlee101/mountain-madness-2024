@@ -1,0 +1,11 @@
+.fadeAway {
+  animation-name: fadeAway;
+  animation-duration: 2s;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes fadeAway {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
