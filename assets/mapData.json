@@ -1,0 +1,20 @@
+{
+    "center": {
+        "lat": 49.277427, 
+        "lng": -122.918754
+    },
+    "maxBounds": {
+        "southwest": {
+            "lat": 0,
+            "lng": 0
+        },
+        "northeast": {
+            "lat": 49.271080,
+            "lng": -122.935537
+        }
+    },
+    "zoom": {
+        "initial": 16,
+        "min": 15
+    }
+}
