@@ -1,6 +1,6 @@
 .fadeAway {
   animation-name: fadeAway;
-  animation-duration: 2s;
+  animation-duration: 0.5s;
   pointer-events: none;
   opacity: 0;
 }
