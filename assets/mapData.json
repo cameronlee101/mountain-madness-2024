@@ -5,8 +5,8 @@
     },
     "maxBounds": {
         "southwest": {
-            "lat": 0,
-            "lng": 0
+            "lat": 49.271032,
+            "lng": -122.935945
         },
         "northeast": {
             "lat": 49.271080,

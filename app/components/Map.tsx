@@ -4,7 +4,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import MapProps from '@typings/MapProps';
 import mapData from '@assets/mapData.json'
 
-const Map: React.FC = (props: MapProps) => {
+const Map: React.FC<MapProps> = (props: MapProps) => {
 	return (
 		<MapContainer
 			className={props.className}
