@@ -3,13 +3,6 @@ import CameraProps from "@typings/CameraProps";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 
-// async function reloadImg(url: string): Promise<void> {
-// 	await fetch(url, { cache: "reload", mode: "no-cors" });
-// 	document.body
-// 		.querySelectorAll(`img[src='${url}']`)
-// 		.forEach((img) => (img.src = url));
-// }
-
 var cameraIcon = L.icon({
 	iconUrl: "camera-icon-right.png",
 
