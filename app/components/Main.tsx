@@ -1,8 +1,9 @@
 import React from 'react';
+import MapComponent from "@components/MapComponent";
 
 const Main: React.FC = () => {
     return <div>
-        <p>42 is a cool number btw</p>
+        <MapComponent></MapComponent>
     </div>
 };
 
