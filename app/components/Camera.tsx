@@ -16,7 +16,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position}>
 			<Popup minWidth={750}>
-				<img src={url} alt={`${props.description}`} />
+				<img src={url} alt={`${props.description}`} style={{borderRadius: '5px'}}/>
 			</Popup>
 		</Marker>
 	);
