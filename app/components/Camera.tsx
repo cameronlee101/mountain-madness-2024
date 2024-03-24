@@ -12,7 +12,7 @@ function updateImage(
 	imageIndex: number,
 	setImageIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
-	console.log("UPDATE IMAGE");
+	// console.log("UPDATE IMAGE");
 	fetch(
 		"/image?" +
 			new URLSearchParams({
@@ -29,9 +29,9 @@ function updateImage(
 						const curPrevious = previous;
 						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
 						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
-						console.log("added at max");
+						// console.log("added at max");
 						// addedAtMax = true;
-						console.log('index', imageIndex, 'array length', images.length);
+						// console.log('index', imageIndex, 'array length', images.length);
 						// if (imageIndex === images.length - 1) {
 						// 	setImageIndex(images.length);
 						// }
@@ -41,7 +41,7 @@ function updateImage(
 
 						return [...newPrevious, newData];
 					} else {
-						console.log("added, array size increased");
+						// console.log("added, array size increased");
 						// addedNewOne = true;
 						// console.log('index', imageIndex, 'array length', images.length);
 						// if (imageIndex === images.length - 1) {
@@ -52,7 +52,7 @@ function updateImage(
 						return [...previous, newData];
 					}
 				} else {
-					console.log("no change needed");
+					// console.log("no change needed");
 					return [...previous];
 				}
 			});
@@ -92,7 +92,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
             //     // Your interval logic here
             //     console.log('Interval triggered');
             // }, 1000);
-			console.log("well well well");
+			// console.log("well well well");
 			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 			const intervalId = setInterval(() => {
 				updateImage(props.name, images, setImages, imageIndex, setImageIndex);
@@ -114,17 +114,17 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	// }, []);
 
 	useEffect(() => {
-		console.log('index =',imageIndex, ' - num images =', images.length);
+		// console.log('index =',imageIndex, ' - num images =', images.length);
 		if (images.length !== settings.maxImages && imageIndex === images.length - 2) {
-			console.log('------------- normal increase no max hit');
+			// console.log('------------- normal increase no max hit');
 			setImageIndex(images.length - 1);
 		} else if (images.length === settings.maxImages) {
 			if (imagesPrevious.length !== images.length && imageIndex === images.length - 2) {
-				console.log('------------- just reached max, set to end');
+				// console.log('------------- just reached max, set to end');
 				// Just reached max.
 				setImageIndex(images.length - 1);
 			} else if (imageIndex > 0 && imageIndex !== images.length - 1) {
-				console.log('------------- already at max, can decrease');
+				// console.log('------------- already at max, can decrease');
 				// Already at max, AND can decrease index without going out of bounds.
 				setImageIndex(previous => previous - 1);
 			}
