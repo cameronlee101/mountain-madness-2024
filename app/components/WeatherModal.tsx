@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Modal,
 	ModalContent,
@@ -23,31 +23,40 @@ export function WeatherModal() {
 				latitude: 49.27,
 				longitude: -122.91,
 				hourly: "temperature_2m",
+				timezone: "America/Los_Angeles",
+				forecast_days: 3,
 			};
 			const url = "https://api.open-meteo.com/v1/forecast";
 			const responses = await fetchWeatherApi(url, params);
+
+			// Helper function to form time ranges
+			const range = (start: number, stop: number, step: number) =>
+				Array.from(
+					{ length: (stop - start) / step },
+					(_, i) => start + i * step
+				);
+
+			// Process first location. Add a for-loop for multiple locations or weather models
 			const response = responses[0];
 
 			// Attributes for timezone and location
 			const utcOffsetSeconds = response.utcOffsetSeconds();
-			const timezone = response.timezone();
-			const timezoneAbbreviation = response.timezoneAbbreviation();
-			const latitude = response.latitude();
-			const longitude = response.longitude();
 
 			const hourly = response.hourly()!;
 
 			// Note: The order of weather variables in the URL query and the indices below need to match!
-			// const weatherData = {
+			const weatherData = {
+				hourly: {
+					time: range(
+						Number(hourly.time()),
+						Number(hourly.timeEnd()),
+						hourly.interval()
+					).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+					temperature2m: Array.from(hourly.variables(0)!.valuesArray()!),
+				},
+			};
 
-			//   hourly: {
-			//     time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
-			//       (t: number) => new Date((t + utcOffsetSeconds) * 1000)
-			//     ),
-			//     temperature2m: hourly.variables(0)!.valuesArray()!,
-			//   },
-
-			// };
+			return weatherData;
 		},
 	});
 
@@ -60,19 +69,28 @@ export function WeatherModal() {
 			>
 				SFU&apos;s Weather Today
 			</Button>
-			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+			<Modal
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+				className="max-h-[90vh]"
+			>
 				<ModalContent>
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1">
-								Modal Title
+								SFU's Weather Over The Next 24 Hours
 							</ModalHeader>
-							<ModalBody>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Nullam pulvinar risus non risus hendrerit venenatis.
-									Pellentesque sit amet hendrerit risus, sed porttitor quam.
-								</p>
+							<ModalBody className="overflow-auto">
+								<div>
+									{Array.from({ length: 24 }, (_, index) => index).map(
+										(index) => (
+											<p key={index}>
+												{data?.hourly.time[index].toISOString()}:00:{" "}
+												{data?.hourly.temperature2m[index].toFixed(1)} &deg;C
+											</p>
+										)
+									)}
+								</div>
 							</ModalBody>
 							<ModalFooter>
 								<Button color="danger" variant="light" onPress={onClose}>
