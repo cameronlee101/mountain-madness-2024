@@ -8,16 +8,16 @@ const TitleCard: React.FC = () => {
 
 	return (
 		<div
-			className={`absolute m-auto left-0 right-0 bottom-4 z-10 w-fit p-2 bg-slate-400 bg-opacity-60 rounded-2xl cursor-pointer ${animationClass}`}
+			className={`absolute m-auto left-0 right-0 bottom-4 z-10 w-fit p-2 bg-slate-700 bg-opacity-75 rounded-2xl cursor-pointer ${animationClass}`}
 			onClick={() => {
 				setAnimationClass(styles.fadeAway);
 			}}
 		>
-			<h1 className="text-3xl font-semibold">
+			<h1 className="text-3xl font-semibold text-white">
 				Viewing SFU From a New Perspective
 			</h1>
-			<p className="mt-2">Click on a pin to see a camera view of SFU!</p>
-			<p>(Click this message to close it)</p>
+			<p className="mt-2 text-white">Click on a pin to see a camera view of SFU!</p>
+			<p className="text-white">(Click this message to close it)</p>
 		</div>
 	);
 };
