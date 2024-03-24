@@ -120,7 +120,7 @@ export function WeatherModal() {
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1">
-								SFU's Weather Over The Next 24 Hours
+								SFU&apos;s Weather Over The Next 24 Hours
 							</ModalHeader>
 							<ModalBody className="overflow-auto">
 								<div>
