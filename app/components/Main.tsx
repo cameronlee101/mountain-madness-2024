@@ -14,7 +14,7 @@ const Main: React.FC = () => {
 			<BusStopModal />
 			<div className="flex flex-1 justify-center items-center w-full">
 				<Map className="w-full h-full z-0">
-					{/* <Camera
+					<Camera
 						name="gaglardi-current"
 						description="Gaglardi intersection."
 						position={[49.27382446075663, -122.92559885491221]}
@@ -23,13 +23,13 @@ const Main: React.FC = () => {
 						name="aqn-current"
 						description="AQ north, looking into the AQ courtyard."
 						position={[49.27855484810059, -122.9174309249192]}
-					/> */}
+					/>
 					<Camera
 						name="aqsw-current"
 						description="AQ south-west corner, looking south-west."
 						position={[49.27847938137774, -122.91784932211006]}
 					/>
-					{/* <Camera
+					<Camera
 						name="aqse-current"
 						description="AQ south-east corner, looking north-east."
 						position={[49.27828620368422, -122.91573304015539]}
@@ -53,7 +53,7 @@ const Main: React.FC = () => {
 						name="wmcroof-current"
 						description="Blusson hall roof south."
 						position={[49.27911263418895, -122.91363968049325]}
-					/> */}
+					/>
 				</Map>
 			</div>
 		</div>
