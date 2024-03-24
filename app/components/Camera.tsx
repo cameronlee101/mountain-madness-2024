@@ -19,6 +19,8 @@ function updateImage(
 			})
 	).then((data) => {
 		data.json().then((info) => {
+			let addedNewOne = false;
+			let addedAtMax = false;
 			setImages((previous) => {
 				const newData = info.message;
 				if (!previous.includes(newData)) {
@@ -26,14 +28,26 @@ function updateImage(
 						const curPrevious = previous;
 						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
 						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
+						console.log("added at max");
+						addedAtMax = true;
 						return [...newPrevious, newData];
 					} else {
+						console.log("added, array size increased");
+						addedNewOne = true;
 						return [...previous, newData];
 					}
 				} else {
+					console.log("no change needed");
 					return [...previous];
 				}
 			});
+
+			// console.log('index =',imageIndex, ' - num images =', images.length);
+			// if (addedNewOne && imageIndex === images.length - 1) {
+			// 	setImageIndex(images.length);
+			// } else if (addedAtMax && imageIndex > 0 && imageIndex !== images.length - 1) {
+			// 	setImageIndex((previous) => previous - 1);
+			// }
 		});
 	});
 }
@@ -58,15 +72,19 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	}, []);
 
 	useEffect(() => {
+		console.log('index =',imageIndex, ' - num images =', images.length);
 		if (imageIndex == images.length - 2) {
 			setImageIndex(images.length - 1);
+		} else {
+			if (images.length === settings.maxImages && imageIndex > 0) {
+				setImageIndex(previous => previous - 1);
+			}
 		}
 	}, [images]);
 
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
-
 				<div className="flex flex-col gap-3">
 					<img
 						src={
@@ -75,7 +93,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 								: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
 						}
 					/>
-					<div className="flex justify-center gap-10">
+					<div className="flex justify-center items-center gap-10">
 						<Button
 							color={imageIndex <= 0 ? "default" : "primary"}
 							disabled={imageIndex <= 0}
@@ -85,6 +103,9 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 						>
 							Previous
 						</Button>
+						<p className="text-xl">
+							{imageIndex + 1}/{images.length}
+						</p>
 						<Button
 							color={imageIndex >= images.length - 1 ? "default" : "primary"}
 							disabled={imageIndex >= images.length - 1}
@@ -96,7 +117,6 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 						</Button>
 					</div>
 				</div>
-
 			</Popup>
 		</Marker>
 	);
