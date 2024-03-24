@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import metaDataConfig from "@assets/metadataConfig.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SFU Webcams",
-  description: "Buy the battle pass to unlock camera skins!!!",
+  title: metaDataConfig.title.base,
+  description: metaDataConfig.description,
 };
 
 export default function RootLayout({
