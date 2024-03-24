@@ -53,6 +53,8 @@ Next.JS [https://nextjs.org/](https://nextjs.org/)
 
 Open-Meteo Weather API [https://open-meteo.com/](https://open-meteo.com/)
 
+Translink Real-time Transit Information API [https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/rtti](https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/rtti)
+
 Leaflet map [https://leafletjs.com/](https://leafletjs.com/)
 
 ## Github
