@@ -131,7 +131,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 					</div>
 				) : (
 					<div className="flex justify-center">
-						<p className="text-xl">Camera is down.</p>
+						<p className="text-xl">Camera Is Down</p>
 					</div>
 				)}
 			</Popup>
