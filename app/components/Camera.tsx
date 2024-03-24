@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CameraProps from "@typings/CameraProps";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { Button, ButtonGroup } from "@nextui-org/react";
 
 function updateImage(
 	url: string,
@@ -54,7 +55,7 @@ function updateImage(
 	).then((data) => {
 		data.json().then((info) => {
 			// console.log("info:", info);
-			
+
 			let added = false;
 			// Store the previous image in the array
 			setImages((previous) => {
@@ -100,7 +101,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 
 	useEffect(() => {
 		// console.log('images at index', imageIndex, 'with images', images, 'cur is', images[imageIndex]);
-		console.log('images at index', imageIndex, 'with images', images);
+		console.log("images at index", imageIndex, "with images", images);
 	}, [images, imageIndex]);
 	// setInterval(() => {
 	// 	updateImage(url, images, setImages, imageIndex, setImageIndex);
@@ -109,18 +110,36 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
-				<img
-					src={
-						imageIndex >= 0
-							? `${images[imageIndex]}`
-							: url
-					}
-					// src={
-					// 	url
-					// }
-					// alt={`${props.description}`}
-					// style={{ borderRadius: "5px" }}
-				/>
+				<div className="flex flex-col gap-3">
+					<img
+						src={imageIndex >= 0 ? `${images[imageIndex]}` : url}
+						// src={
+						// 	url
+						// }
+						// alt={`${props.description}`}
+						// style={{ borderRadius: "5px" }}
+					/>
+					<div className="flex justify-center gap-10">
+						<Button
+							color="primary"
+							disabled={imageIndex === 0}
+							onClick={() => {
+								setImageIndex((previous) => previous - 1);
+							}}
+						>
+							Previous
+						</Button>
+						<Button
+							color="primary"
+							disabled={imageIndex === images.length - 1}
+							onClick={() => {
+								setImageIndex((previous) => previous + 1);
+							}}
+						>
+							Next
+						</Button>
+					</div>
+				</div>
 			</Popup>
 		</Marker>
 	);
