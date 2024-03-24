@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mountain Madness 2024",
-  description: "Mountain Madness 2024 Project",
+  title: "SFU Webcams",
+  description: "Buy the battle pass to unlock camera skins!!!",
 };
 
 export default function RootLayout({
