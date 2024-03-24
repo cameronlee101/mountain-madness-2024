@@ -27,7 +27,7 @@ const Main: React.FC = () => {
 					/>
 					<Camera
 						name="aqse-current"
-						description="AQ south-east corner, looking north-west."
+						description="AQ south-east corner, looking north-east."
 						position={[49.27828620368422, -122.91573304015539]}
 					/>
 					<Camera
