@@ -66,7 +66,14 @@ function updateImage(
 					// 	// Set imageIndex to now be images.length (the most recent image).
 					// 	setImageIndex(image);
 					// }
-					return [...previous, newData];
+					if (previous.length >= settings.maxImages) {
+						const curPrevious = previous;
+						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
+						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
+						return [...newPrevious, newData];
+					} else {
+						return [...previous, newData];
+					}
 				} else {
 					// console.log('already ADDED well well well');
 					return [...previous];
