@@ -2,7 +2,9 @@
 
 ## Description
 
-View SFU with a new perspective through SFU Burnaby campus' live webcams. Easily see the location of each webcam and tune in by clicking on them.
+View SFU with a new perspective through SFU Burnaby campus' live webcams! Easily see the location of each webcam and tune in by clicking on them. Furthermore, you can view weather conditions for the day, and times for the next bus departures.
+
+Visit the site here: [https://sfu-webcams.vercel.app/](https://sfu-webcams.vercel.app/)
 
 ## File Structure
 
@@ -42,6 +44,8 @@ NextUI library [https://nextui.org/](https://nextui.org/)
 
 Next.JS [https://nextjs.org/](https://nextjs.org/)
 
+Leaflet map [https://leafletjs.com/](https://leafletjs.com/)
+
 ## Asset Credits
 
 - Chat GPT was used for code generation
@@ -51,8 +55,6 @@ Next.JS [https://nextjs.org/](https://nextjs.org/)
 ## APIs used
 
 Open-Meteo Weather API [https://open-meteo.com/](https://open-meteo.com/)
-
-Leaflet map [https://leafletjs.com/](https://leafletjs.com/)
 
 ## Github
 
