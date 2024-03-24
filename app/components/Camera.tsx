@@ -12,42 +12,6 @@ function updateImage(
 	imageIndex: number,
 	setImageIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
-	// fetch(url, { cache: "reload", mode: "cors" }).then((response) => {
-	// fetch(url).then((response) => {
-	// 	console.log(url);
-	// 	response.blob().then((blob) => {
-	// 		const reader = new FileReader();
-	// 		reader.onloadend = () => {
-	// 			let base64data = reader.result;
-	// 			console.log("Base64 data:", base64data);
-	// 			if (typeof base64data !== "string") {
-	// 				return;
-	// 			}
-	// 			base64data = base64data.replace(
-	// 				"data:application/octet-stream;base64,",
-	// 				""
-	// 			);
-	// 			if (typeof base64data !== "string") {
-	// 				return;
-	// 			}
-	// 			const data = base64data;
-	// 			console.log("DATA IS", data);
-	// 			// Store the previous image in the array
-	// 			// setImages((previous) => [...previous, data]);
-	// 			// Increase index if at the end.
-	// 			if (imageIndex === images.length - 1) {
-	// 				// Set imageIndex to now be images.length (the most recent image).
-	// 				// setImageIndex((previous) => previous + 1);
-	// 			}
-	// 		};
-	// 		console.log('blob is:', blob);
-	// 		reader.readAsDataURL(blob);
-	// 	});
-	// 	// Force the DOM images to update.
-	// 	// document.body
-	// 	// 	.querySelectorAll(`img[src='${url}']`)
-	// 	// 	.forEach((img) => ((img as HTMLImageElement).src = url))
-	// });
 	fetch(
 		"/image?" +
 			new URLSearchParams({
@@ -55,20 +19,18 @@ function updateImage(
 			})
 	).then((data) => {
 		data.json().then((info) => {
-			// console.log("info:", info);
-
-			// Store the previous image in the array
 			setImages((previous) => {
 				const newData = info.message;
 				if (!previous.includes(newData)) {
-					// if (imageIndex === images.length - 1) {
-					// 	console.log('MOVING ONE FORWARDS');
-					// 	// Set imageIndex to now be images.length (the most recent image).
-					// 	setImageIndex(image);
-					// }
-					return [...previous, newData];
+					if (previous.length >= settings.maxImages) {
+						const curPrevious = previous;
+						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
+						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
+						return [...newPrevious, newData];
+					} else {
+						return [...previous, newData];
+					}
 				} else {
-					// console.log('already ADDED well well well');
 					return [...previous];
 				}
 			});
@@ -88,32 +50,18 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 		popupAnchor: [0, -15],
 	});
 
-	// updateImage(url, images, setImages, imageIndex, setImageIndex);
 	useEffect(() => {
 		updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 		setInterval(() => {
-			// console.log('updating images...');
 			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 		}, 10000);
 	}, []);
 
 	useEffect(() => {
-		// console.log('images at index', imageIndex, 'with images', images, 'cur is', images[imageIndex]);
-		console.log("images at index", imageIndex, "with images", images);
-	}, [images, imageIndex]);
-
-	useEffect(() => {
-		console.log("checking if should updating index....");
 		if (imageIndex == images.length - 2) {
-			console.log("YESSSIRRR");
 			setImageIndex(images.length - 1);
-		} else {
-			console.log("NOOSIRRR CAP");
 		}
 	}, [images]);
-	// setInterval(() => {
-	// 	updateImage(url, images, setImages, imageIndex, setImageIndex);
-	// }, 10000);
 
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
@@ -126,11 +74,6 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 								? `${images[imageIndex]}`
 								: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
 						}
-						// src={
-						// 	url
-						// }
-						// alt={`${props.description}`}
-						// style={{ borderRadius: "5px" }}
 					/>
 					<div className="flex justify-center gap-10">
 						<Button
