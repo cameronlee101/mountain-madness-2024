@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import CameraProps from "@typings/CameraProps";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { Button } from "@nextui-org/react";
+import settings from "@assets/setting.json";
 
 function updateImage(
 	name: string,
@@ -55,22 +57,21 @@ function updateImage(
 		data.json().then((info) => {
 			// console.log("info:", info);
 
-			let added = false;
 			// Store the previous image in the array
 			setImages((previous) => {
 				const newData = info.message;
 				if (!previous.includes(newData)) {
-					added = true;
+					// if (imageIndex === images.length - 1) {
+					// 	console.log('MOVING ONE FORWARDS');
+					// 	// Set imageIndex to now be images.length (the most recent image).
+					// 	setImageIndex(image);
+					// }
 					return [...previous, newData];
 				} else {
 					// console.log('already ADDED well well well');
 					return [...previous];
 				}
 			});
-			if (added && imageIndex === images.length - 1) {
-				// Set imageIndex to now be images.length (the most recent image).
-				setImageIndex((previous) => previous + 1);
-			}
 		});
 	});
 }
@@ -100,6 +101,16 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 		// console.log('images at index', imageIndex, 'with images', images, 'cur is', images[imageIndex]);
 		console.log("images at index", imageIndex, "with images", images);
 	}, [images, imageIndex]);
+
+	useEffect(() => {
+		console.log("checking if should updating index....");
+		if (imageIndex == images.length - 2) {
+			console.log("YESSSIRRR");
+			setImageIndex(images.length - 1);
+		} else {
+			console.log("NOOSIRRR CAP");
+		}
+	}, [images]);
 	// setInterval(() => {
 	// 	updateImage(url, images, setImages, imageIndex, setImageIndex);
 	// }, 10000);
@@ -107,18 +118,42 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
-				<img
-					src={
-						imageIndex >= 0
-							? `${images[imageIndex]}`
-							: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
-					}
-					// src={
-					// 	url
-					// }
-					// alt={`${props.description}`}
-					// style={{ borderRadius: "5px" }}
-				/>
+
+				<div className="flex flex-col gap-3">
+					<img
+						src={
+							imageIndex >= 0
+								? `${images[imageIndex]}`
+								: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
+						}
+						// src={
+						// 	url
+						// }
+						// alt={`${props.description}`}
+						// style={{ borderRadius: "5px" }}
+					/>
+					<div className="flex justify-center gap-10">
+						<Button
+							color={imageIndex <= 0 ? "default" : "primary"}
+							disabled={imageIndex <= 0}
+							onClick={() => {
+								setImageIndex((previous) => previous - 1);
+							}}
+						>
+							Previous
+						</Button>
+						<Button
+							color={imageIndex >= images.length - 1 ? "default" : "primary"}
+							disabled={imageIndex >= images.length - 1}
+							onClick={() => {
+								setImageIndex((previous) => previous + 1);
+							}}
+						>
+							Next
+						</Button>
+					</div>
+				</div>
+
 			</Popup>
 		</Marker>
 	);
