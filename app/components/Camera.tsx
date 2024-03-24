@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/react";
 import settings from "@assets/setting.json";
 
 function updateImage(
-	url: string,
+	name: string,
 	images: string[],
 	setImages: React.Dispatch<React.SetStateAction<string[]>>,
 	imageIndex: number,
@@ -51,7 +51,7 @@ function updateImage(
 	fetch(
 		"/image?" +
 			new URLSearchParams({
-				url: url,
+				name: name,
 			})
 	).then((data) => {
 		data.json().then((info) => {
@@ -88,14 +88,12 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 		popupAnchor: [0, -15],
 	});
 
-	let url = `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`;
-
 	// updateImage(url, images, setImages, imageIndex, setImageIndex);
 	useEffect(() => {
-		updateImage(url, images, setImages, imageIndex, setImageIndex);
+		updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 		setInterval(() => {
 			// console.log('updating images...');
-			updateImage(url, images, setImages, imageIndex, setImageIndex);
+			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 		}, 10000);
 	}, []);
 
@@ -120,6 +118,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
+<<<<<<< HEAD
 				<div className="flex flex-col gap-3">
 					<img
 						src={imageIndex >= 0 ? `${images[imageIndex]}` : url}
@@ -150,6 +149,20 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 						</Button>
 					</div>
 				</div>
+=======
+				<img
+					src={
+						imageIndex >= 0
+							? `${images[imageIndex]}`
+							: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
+					}
+					// src={
+					// 	url
+					// }
+					// alt={`${props.description}`}
+					// style={{ borderRadius: "5px" }}
+				/>
+>>>>>>> 1f6ff3430ddfeb0f6fecb8032f78894a3a91e8e9
 			</Popup>
 		</Marker>
 	);

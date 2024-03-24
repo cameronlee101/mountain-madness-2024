@@ -14,8 +14,9 @@ async function streamToBuffer(stream: any) {
 
 export async function GET(request: Request) {
 	// console.log('abcef', request);
-	const info = request.url.split("?")[1];
-	const url = decodeURIComponent(info.split("=")[1]);
+	const nameArg = request.url.split("?")[1];
+	const name = decodeURIComponent(nameArg.split("=")[1]);
+	const url = `https://ns-webcams.its.sfu.ca/public/images/${name}.jpg`;
 	// console.log('2theurl', decodeURIComponent(url));
 
 	const response = await fetch(url);
