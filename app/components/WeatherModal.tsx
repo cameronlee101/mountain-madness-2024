@@ -58,7 +58,7 @@ export function WeatherModal() {
 				className="absolute top-3 right-3 z-10"
 				onPress={onOpen}
 			>
-				SFU's Weather Today
+				SFU&apos;s Weather Today
 			</Button>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 				<ModalContent>
