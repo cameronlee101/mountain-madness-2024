@@ -16,9 +16,13 @@ Images used stored in /public/
 
 .json files used in code stored in /assets/
 
-## Getting Started
+## Instructions for Running Locally
 
 - Install node js [https://nodejs.org/en](https://nodejs.org/en)
+
+- Create a Translink developer account: [https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/register](https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/register)
+    - Verify your email and login - your API key will be emailed to you once logged in
+    - Replace NEXT_PUBLIC_TRANSLINK_API_KEY value in .env with your API key
 
 - cd into this project
 
