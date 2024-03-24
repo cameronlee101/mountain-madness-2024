@@ -53,11 +53,21 @@ function updateImage(
 			})
 	).then((data) => {
 		data.json().then((info) => {
-			console.log("info:", info);
-
+			// console.log("info:", info);
+			
+			let added = false;
 			// Store the previous image in the array
-			setImages((previous) => [...previous, info.message]);
-			if (imageIndex === images.length - 1) {
+			setImages((previous) => {
+				const newData = info.message;
+				if (!previous.includes(newData)) {
+					added = true;
+					return [...previous, newData];
+				} else {
+					// console.log('already ADDED well well well');
+					return [...previous];
+				}
+			});
+			if (added && imageIndex === images.length - 1) {
 				// Set imageIndex to now be images.length (the most recent image).
 				setImageIndex((previous) => previous + 1);
 			}
@@ -82,9 +92,15 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	// updateImage(url, images, setImages, imageIndex, setImageIndex);
 	useEffect(() => {
 		updateImage(url, images, setImages, imageIndex, setImageIndex);
+		setInterval(() => {
+			// console.log('updating images...');
+			updateImage(url, images, setImages, imageIndex, setImageIndex);
+		}, 10000);
 	}, []);
+
 	useEffect(() => {
-		console.log('images at index', imageIndex, 'with images', images, 'cur is', images[imageIndex]);
+		// console.log('images at index', imageIndex, 'with images', images, 'cur is', images[imageIndex]);
+		console.log('images at index', imageIndex, 'with images', images);
 	}, [images, imageIndex]);
 	// setInterval(() => {
 	// 	updateImage(url, images, setImages, imageIndex, setImageIndex);
@@ -97,7 +113,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 					src={
 						imageIndex >= 0
 							? `${images[imageIndex]}`
-							: "aaaaaa"
+							: url
 					}
 					// src={
 					// 	url
