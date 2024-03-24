@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import metaDataConfig from "@assets/metadataConfig.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Mountain Madness 2024",
-	description: "Mountain Madness 2024 Project",
+	title: metaDataConfig.title.base,
+	description: metaDataConfig.description,
 };
 
 export default function RootLayout({
