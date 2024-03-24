@@ -101,7 +101,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
-			<Popup minWidth={750}>
+			<Popup minWidth={Math.min(750, window.innerWidth - 100)}>
 				{imageIndex >= 0 ? (
 					<div className="flex flex-col gap-3">
 						<img src={images[imageIndex]} />{" "}
