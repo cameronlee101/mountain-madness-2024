@@ -19,6 +19,11 @@ function updateImage(
 			})
 	).then((data) => {
 		data.json().then((info) => {
+			const theData = info.message;
+			if (theData.length < 1000) {
+				// Error getting the data.
+				return;
+			}
 			// let addedNewOne = false;
 			// let addedAtMax = false;
 			setImages((previous) => {
@@ -43,9 +48,9 @@ function updateImage(
 const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	const [images, setImages] = useState<string[]>([]);
 	const [imagesPrevious, setImagesPrevious] = useState<string[]>([]);
@@ -60,29 +65,35 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	});
 
 	useEffect(() => {
-        if (mounted) {
+		if (mounted) {
 			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 			const intervalId = setInterval(() => {
 				updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 			}, 10000);
 
-            // Clean up the interval when the component is unmounted
-            return () => {
-                clearInterval(intervalId);
-            };
-        }
-    }, [mounted]);
+			// Clean up the interval when the component is unmounted
+			return () => {
+				clearInterval(intervalId);
+			};
+		}
+	}, [mounted]);
 
 	useEffect(() => {
-		if (images.length !== settings.maxImages && imageIndex === images.length - 2) {
+		if (
+			images.length !== settings.maxImages &&
+			imageIndex === images.length - 2
+		) {
 			setImageIndex(images.length - 1);
 		} else if (images.length === settings.maxImages) {
-			if (imagesPrevious.length !== images.length && imageIndex === images.length - 2) {
+			if (
+				imagesPrevious.length !== images.length &&
+				imageIndex === images.length - 2
+			) {
 				// Just reached max.
 				setImageIndex(images.length - 1);
 			} else if (imageIndex > 0 && imageIndex !== images.length - 1) {
 				// Already at max, AND can decrease index without going out of bounds.
-				setImageIndex(previous => previous - 1);
+				setImageIndex((previous) => previous - 1);
 			}
 		}
 		setImagesPrevious(images);
@@ -91,38 +102,38 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
-				<div className="flex flex-col gap-3">
-					<img
-						src={
-							imageIndex >= 0
-								? `${images[imageIndex]}`
-								: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
-						}
-					/>
-					<div className="flex justify-center items-center gap-10">
-						<Button
-							color={imageIndex <= 0 ? "default" : "primary"}
-							disabled={imageIndex <= 0}
-							onClick={() => {
-								setImageIndex((previous) => previous - 1);
-							}}
-						>
-							Previous
-						</Button>
-						<p className="text-xl">
-							{imageIndex + 1}/{images.length}
-						</p>
-						<Button
-							color={imageIndex >= images.length - 1 ? "default" : "primary"}
-							disabled={imageIndex >= images.length - 1}
-							onClick={() => {
-								setImageIndex((previous) => previous + 1);
-							}}
-						>
-							Next
-						</Button>
+				{imageIndex >= 0 ? (
+					<div className="flex flex-col gap-3">
+						<img src={images[imageIndex]} />{" "}
+						<div className="flex justify-center items-center gap-10">
+							<Button
+								color={imageIndex <= 0 ? "default" : "primary"}
+								disabled={imageIndex <= 0}
+								onClick={() => {
+									setImageIndex((previous) => previous - 1);
+								}}
+							>
+								Previous
+							</Button>
+							<p className="text-xl">
+								{imageIndex + 1}/{images.length}
+							</p>
+							<Button
+								color={imageIndex >= images.length - 1 ? "default" : "primary"}
+								disabled={imageIndex >= images.length - 1}
+								onClick={() => {
+									setImageIndex((previous) => previous + 1);
+								}}
+							>
+								Next
+							</Button>
+						</div>
 					</div>
-				</div>
+				) : (
+					<div className="flex justify-center">
+						<p className="text-xl">Camera is down.</p>
+					</div>
+				)}
 			</Popup>
 		</Marker>
 	);
