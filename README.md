@@ -2,7 +2,9 @@
 
 ## Description
 
-View SFU with a new perspective through SFU Burnaby campus' live webcams! Easily see the location of each webcam and tune in by clicking on them. Furthermore, you can view weather conditions for the day, and times for the next bus departures.
+View SFU with a new perspective through SFU Burnaby campus' live webcams! Easily see the location of each webcam and tune in by clicking on them. Images updated live every 10 seconds - swipe through to see previous images.
+
+Additionally, view weather conditions for the day, and times for the next bus departures.
 
 Visit the site here: [https://sfu-webcams.vercel.app/](https://sfu-webcams.vercel.app/)
 
