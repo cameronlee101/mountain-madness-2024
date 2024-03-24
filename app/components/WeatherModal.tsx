@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import {
 	Modal,
 	ModalContent,
@@ -14,6 +14,47 @@ import { fetchWeatherApi } from "openmeteo";
 import { useQuery } from "@tanstack/react-query";
 
 export function WeatherModal() {
+	const weatherCodes: { [code: string]: string } = {
+		"-1": "Error",
+		"0": "Clear sky",
+		"1": "Mainly clear",
+		"2": "Partly cloudy",
+		"3": "Overcast",
+		"45": "Fog",
+		"48": "Depositing rime fog",
+		"51": "Drizzle: Light intensity",
+		"53": "Drizzle: Moderate intensity",
+		"55": "Drizzle: Dense intensity",
+		"56": "Freezing Drizzle: Light intensity",
+		"57": "Freezing Drizzle: Dense intensity",
+		"61": "Rain: Slight intensity",
+		"63": "Rain: Moderate intensity",
+		"65": "Rain: Heavy intensity",
+		"66": "Freezing Rain: Light intensity",
+		"67": "Freezing Rain: Heavy intensity",
+		"71": "Snowfall: Slight intensity",
+		"73": "Snowfall: Moderate intensity",
+		"75": "Snowfall: Heavy intensity",
+		"77": "Snow grains",
+		"80": "Rain showers: Slight intensity",
+		"81": "Rain showers: Moderate intensity",
+		"82": "Rain showers: Violent",
+		"85": "Snow showers: Slight intensity",
+		"86": "Snow showers: Heavy intensity",
+		"95": "Thunderstorm: Slight or moderate",
+		"96": "Thunderstorm: Slight hail",
+		"99": "Thunderstorm: Heavy hail",
+	};
+	const curHour = new Date().getHours();
+
+	function getWeatherDescription(code: string | undefined): string {
+		if (code) {
+			return weatherCodes[code];
+		} else {
+			return "Error";
+		}
+	}
+
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const { isLoading, error, data } = useQuery({
@@ -22,7 +63,7 @@ export function WeatherModal() {
 			const params = {
 				latitude: 49.27,
 				longitude: -122.91,
-				hourly: "temperature_2m",
+				hourly: ["temperature_2m", "weather_code"],
 				timezone: "America/Los_Angeles",
 				forecast_days: 3,
 			};
@@ -51,8 +92,9 @@ export function WeatherModal() {
 						Number(hourly.time()),
 						Number(hourly.timeEnd()),
 						hourly.interval()
-					).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+					).map((t) => new Date(t * 1000)),
 					temperature2m: Array.from(hourly.variables(0)!.valuesArray()!),
+					weatherCode: Array.from(hourly.variables(1)!.valuesArray()!),
 				},
 			};
 
@@ -85,8 +127,12 @@ export function WeatherModal() {
 									{Array.from({ length: 24 }, (_, index) => index).map(
 										(index) => (
 											<p key={index}>
-												{data?.hourly.time[index].toISOString()}:00:{" "}
-												{data?.hourly.temperature2m[index].toFixed(1)} &deg;C
+												{data?.hourly.time[index + curHour].getHours()}:00:{" "}
+												{data?.hourly.temperature2m[index + curHour].toFixed(1)}{" "}
+												&deg;C{" "}
+												{getWeatherDescription(
+													data?.hourly.weatherCode[index + curHour].toString()
+												)}
 											</p>
 										)
 									)}
