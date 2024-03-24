@@ -7,9 +7,9 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	var cameraIcon = L.icon({
 		iconUrl: `/cameras/${props.name}.png`,
 
-		iconSize: [40, 40], // size of the icon
-		iconAnchor: [20, 20], // point of the icon which will correspond to marker's location
-		popupAnchor: [0, -15], // point from which the popup should open relative to the iconAnchor
+		iconSize: [40, 40],
+		iconAnchor: [20, 20],
+		popupAnchor: [0, -15],
 	});
 
 	let url = `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`;
