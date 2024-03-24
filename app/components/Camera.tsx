@@ -12,6 +12,7 @@ function updateImage(
 	imageIndex: number,
 	setImageIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
+	console.log("UPDATE IMAGE");
 	fetch(
 		"/image?" +
 			new URLSearchParams({
@@ -19,8 +20,8 @@ function updateImage(
 			})
 	).then((data) => {
 		data.json().then((info) => {
-			let addedNewOne = false;
-			let addedAtMax = false;
+			// let addedNewOne = false;
+			// let addedAtMax = false;
 			setImages((previous) => {
 				const newData = info.message;
 				if (!previous.includes(newData)) {
@@ -29,11 +30,25 @@ function updateImage(
 						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
 						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
 						console.log("added at max");
-						addedAtMax = true;
+						// addedAtMax = true;
+						console.log('index', imageIndex, 'array length', images.length);
+						// if (imageIndex === images.length - 1) {
+						// 	setImageIndex(images.length);
+						// }
+						// else if (imageIndex > 0) {
+						// 	setImageIndex(previous => previous - 1);
+						// }
+
 						return [...newPrevious, newData];
 					} else {
 						console.log("added, array size increased");
-						addedNewOne = true;
+						// addedNewOne = true;
+						// console.log('index', imageIndex, 'array length', images.length);
+						// if (imageIndex === images.length - 1) {
+						// 	console.log("setting to ", images.length);
+						// 	setImageIndex(1);
+						// }
+
 						return [...previous, newData];
 					}
 				} else {
@@ -53,7 +68,14 @@ function updateImage(
 }
 
 const Camera: React.FC<CameraProps> = (props: CameraProps) => {
+	const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
 	const [images, setImages] = useState<string[]>([]);
+	const [imagesPrevious, setImagesPrevious] = useState<string[]>([]);
 	const [imageIndex, setImageIndex] = useState(-1);
 
 	const cameraIcon = L.icon({
@@ -65,21 +87,53 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	});
 
 	useEffect(() => {
-		updateImage(props.name, images, setImages, imageIndex, setImageIndex);
-		setInterval(() => {
+        if (mounted) {
+            // const intervalId = setInterval(() => {
+            //     // Your interval logic here
+            //     console.log('Interval triggered');
+            // }, 1000);
+			console.log("well well well");
 			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
-		}, 10000);
-	}, []);
+			const intervalId = setInterval(() => {
+				updateImage(props.name, images, setImages, imageIndex, setImageIndex);
+			}, 10000);
+
+            // Clean up the interval when the component is unmounted
+            return () => {
+                clearInterval(intervalId);
+            };
+        }
+    }, [mounted]);
+
+	// useEffect(() => {
+	// 	// updateImage(props.name, images, setImages, imageIndex, setImageIndex);
+	// 	console.log("well well well");
+	// 	setInterval(() => {
+	// 		updateImage(props.name, images, setImages, imageIndex, setImageIndex);
+	// 	}, 10000);
+	// }, []);
 
 	useEffect(() => {
 		console.log('index =',imageIndex, ' - num images =', images.length);
-		if (imageIndex == images.length - 2) {
+		if (images.length !== settings.maxImages && imageIndex === images.length - 2) {
+			console.log('------------- normal increase no max hit');
 			setImageIndex(images.length - 1);
-		} else {
-			if (images.length === settings.maxImages && imageIndex > 0) {
+		} else if (images.length === settings.maxImages) {
+			if (imagesPrevious.length !== images.length && imageIndex === images.length - 2) {
+				console.log('------------- just reached max, set to end');
+				// Just reached max.
+				setImageIndex(images.length - 1);
+			} else if (imageIndex > 0 && imageIndex !== images.length - 1) {
+				console.log('------------- already at max, can decrease');
+				// Already at max, AND can decrease index without going out of bounds.
 				setImageIndex(previous => previous - 1);
 			}
 		}
+		// else if (images.length === settings.maxImages && imageIndex < images.length - 1 && imageIndex > 0) {
+		// 	console.log("GOING DOWN!!!");
+		// 	setImageIndex(previous => previous - 1);
+		// }
+		setImagesPrevious(images);
 	}, [images]);
 
 	return (
