@@ -12,7 +12,6 @@ function updateImage(
 	imageIndex: number,
 	setImageIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
-	// console.log("UPDATE IMAGE");
 	fetch(
 		"/image?" +
 			new URLSearchParams({
@@ -29,40 +28,14 @@ function updateImage(
 						const curPrevious = previous;
 						const numKeep = settings.maxImages - 1; // Need to ensure a free spot for the new image.
 						const newPrevious = curPrevious.slice(curPrevious.length - numKeep);
-						// console.log("added at max");
-						// addedAtMax = true;
-						// console.log('index', imageIndex, 'array length', images.length);
-						// if (imageIndex === images.length - 1) {
-						// 	setImageIndex(images.length);
-						// }
-						// else if (imageIndex > 0) {
-						// 	setImageIndex(previous => previous - 1);
-						// }
-
 						return [...newPrevious, newData];
 					} else {
-						// console.log("added, array size increased");
-						// addedNewOne = true;
-						// console.log('index', imageIndex, 'array length', images.length);
-						// if (imageIndex === images.length - 1) {
-						// 	console.log("setting to ", images.length);
-						// 	setImageIndex(1);
-						// }
-
 						return [...previous, newData];
 					}
 				} else {
-					// console.log("no change needed");
 					return [...previous];
 				}
 			});
-
-			// console.log('index =',imageIndex, ' - num images =', images.length);
-			// if (addedNewOne && imageIndex === images.length - 1) {
-			// 	setImageIndex(images.length);
-			// } else if (addedAtMax && imageIndex > 0 && imageIndex !== images.length - 1) {
-			// 	setImageIndex((previous) => previous - 1);
-			// }
 		});
 	});
 }
@@ -88,11 +61,6 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 
 	useEffect(() => {
         if (mounted) {
-            // const intervalId = setInterval(() => {
-            //     // Your interval logic here
-            //     console.log('Interval triggered');
-            // }, 1000);
-			// console.log("well well well");
 			updateImage(props.name, images, setImages, imageIndex, setImageIndex);
 			const intervalId = setInterval(() => {
 				updateImage(props.name, images, setImages, imageIndex, setImageIndex);
@@ -105,34 +73,18 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
         }
     }, [mounted]);
 
-	// useEffect(() => {
-	// 	// updateImage(props.name, images, setImages, imageIndex, setImageIndex);
-	// 	console.log("well well well");
-	// 	setInterval(() => {
-	// 		updateImage(props.name, images, setImages, imageIndex, setImageIndex);
-	// 	}, 10000);
-	// }, []);
-
 	useEffect(() => {
-		// console.log('index =',imageIndex, ' - num images =', images.length);
 		if (images.length !== settings.maxImages && imageIndex === images.length - 2) {
-			// console.log('------------- normal increase no max hit');
 			setImageIndex(images.length - 1);
 		} else if (images.length === settings.maxImages) {
 			if (imagesPrevious.length !== images.length && imageIndex === images.length - 2) {
-				// console.log('------------- just reached max, set to end');
 				// Just reached max.
 				setImageIndex(images.length - 1);
 			} else if (imageIndex > 0 && imageIndex !== images.length - 1) {
-				// console.log('------------- already at max, can decrease');
 				// Already at max, AND can decrease index without going out of bounds.
 				setImageIndex(previous => previous - 1);
 			}
 		}
-		// else if (images.length === settings.maxImages && imageIndex < images.length - 1 && imageIndex > 0) {
-		// 	console.log("GOING DOWN!!!");
-		// 	setImageIndex(previous => previous - 1);
-		// }
 		setImagesPrevious(images);
 	}, [images]);
 
