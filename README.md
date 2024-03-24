@@ -49,6 +49,12 @@ Next.JS [https://nextjs.org/](https://nextjs.org/)
     - Project location: [assets/camera-icon.png](assets/camera-icon.png)
 - Camera footage fetched from SFU: [click here to see if footage is running!](https://www.sfu.ca/information-systems/services/webcam/live-burnaby-campus-webcams.html)
 
+## APIs used
+
+Open-Meteo Weather API [https://open-meteo.com/](https://open-meteo.com/)
+
+Leaflet map [https://leafletjs.com/](https://leafletjs.com/)
+
 ## Github
 
 [https://github.com/cameronlee101/mountain-madness-2024](https://github.com/cameronlee101/mountain-madness-2024)
