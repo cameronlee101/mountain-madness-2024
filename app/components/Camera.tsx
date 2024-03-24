@@ -118,10 +118,14 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 	return (
 		<Marker position={props.position} icon={cameraIcon}>
 			<Popup minWidth={750}>
-<<<<<<< HEAD
+
 				<div className="flex flex-col gap-3">
 					<img
-						src={imageIndex >= 0 ? `${images[imageIndex]}` : url}
+						src={
+							imageIndex >= 0
+								? `${images[imageIndex]}`
+								: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
+						}
 						// src={
 						// 	url
 						// }
@@ -149,20 +153,7 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
 						</Button>
 					</div>
 				</div>
-=======
-				<img
-					src={
-						imageIndex >= 0
-							? `${images[imageIndex]}`
-							: `https://ns-webcams.its.sfu.ca/public/images/${props.name}.jpg`
-					}
-					// src={
-					// 	url
-					// }
-					// alt={`${props.description}`}
-					// style={{ borderRadius: "5px" }}
-				/>
->>>>>>> 1f6ff3430ddfeb0f6fecb8032f78894a3a91e8e9
+
 			</Popup>
 		</Marker>
 	);
