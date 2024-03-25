@@ -18,6 +18,8 @@ Images used stored in /public/
 
 ## Instructions for Running Locally
 
+- Demo Video: [https://youtu.be/gRRcCRb0RTw](https://youtu.be/gRRcCRb0RTw)
+
 - Install node js [https://nodejs.org/en](https://nodejs.org/en)
 
 - Create a Translink developer account: [https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/register](https://www.translink.ca/about-us/doing-business-with-translink/app-developer-resources/register)
