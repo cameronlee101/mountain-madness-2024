@@ -18,7 +18,7 @@ Images used stored in /public/
 
 ## Instructions for Running Locally
 
-- Demo Video: [https://youtu.be/gRRcCRb0RTw](https://youtu.be/gRRcCRb0RTw)
+Demo Video: [https://youtu.be/gRRcCRb0RTw](https://youtu.be/gRRcCRb0RTw)
 
 - Install node js [https://nodejs.org/en](https://nodejs.org/en)
 
